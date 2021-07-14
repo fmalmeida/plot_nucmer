@@ -1,0 +1,186 @@
+#!/bin/bash
+
+############
+### Help ###
+############
+Help()
+{
+cat << EOF
+Simple script to run a whole genome alignment between two FASTAs with nucmer
+and create a circular visualization of the results.
+
+Copyright, Felipe Almeida <almeidafmarques@outlook.com>, 2021
+
+# Comments
+The subject will be draw in the outer most layer and the query will be draw in
+the inner layer, as it is showing an alignment of the query against the subject.
+
+ Syntax:
+  plot_nucmer [OPTIONS]
+
+ Options:
+
+  ## Required
+
+  --subject <fasta>                                     Path to Fasta file to be used as subject in alignment.
+
+  --sprefix <string>                             Prefix (name) to be used for subject FASTA.
+                                                        Obs: Fasta files and names must not have spaces.
+
+  --query <fasta>                                       Path to Fasta file to be used as query in alignment.
+
+  --qprefix <string>                               Prefix (name) to be used for query FASTA.
+                                                        Obs: Fasta files and names must not have spaces.
+
+  ## Optional
+
+  --out <string>                                        Prefix for nucmer plot outputs.
+                                                        Default: plot_nucmer_\${qprefix}_vs_\${sprefix}
+
+  --minlen <int>                                        Min. alignment length to be considered for plot. Default: 1000.
+
+  --minid <int>                                         Min. alignment identity to be considered for plot. Default: 90.
+
+EOF
+}
+
+################
+### Defaults ###
+################
+export SUBJECT_FASTA=""
+export SUBJECT_PREFIX=""
+export QUERY_FASTA=""
+export QUERY_PREFIX=""
+export OUTNAME="plot_nucmer_${QUERY_PREFIX}_vs_${SUBJECT_PREFIX}"
+export MINLEN=1000
+export MINID=90
+
+################################
+### Get positional arguments ###
+################################
+# No arguments given
+if [ $# -eq 0 ] ; then
+    Help
+    exit 0
+fi
+
+# arguments given
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+ARGS="$1"
+case $ARGS in
+    -h|--help)
+      Help
+      exit
+      ;;
+    --subject)
+      if [[ -f "$2" ]]; then
+          export SUBJECT_FASTA=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--subject" requires an argument\n'
+          exit
+      fi
+      ;;
+    --sprefix)
+      if [[ "$2" ]]; then
+          export SUBJECT_PREFIX=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--sprefix" requires an argument\n'
+          exit
+      fi
+      ;;
+    --query)
+      if [[ -f "$2" ]]; then
+          export QUERY_FASTA=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--query" requires an argument\n'
+          exit
+      fi
+      ;;
+    --qprefix)
+      if [[ "$2" ]]; then
+          export QUERY_PREFIX=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--qprefix" requires an argument\n'
+          exit
+      fi
+      ;;
+    --out)
+      if [[ -f "$2" ]]; then
+          export OUTNAME=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--out" requires an argument\n'
+          exit
+      fi
+      ;;
+    --minlen)
+      if [[ "$2" ]]; then
+          export MINLEN=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--minlen" requires a numeric argument\n'
+          exit
+      fi
+      ;;
+    --minid)
+      if [[ "$2" ]]; then
+          export MINID=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--minid" requires an argument\n'
+          exit
+      fi
+      ;;
+    *)
+      printf "******************************\n"
+      printf "Error: Invalid argument $1\n"
+      printf "******************************\n"
+      exit 1
+esac
+done
+
+###################
+### Main script ###
+###################
+
+# start
+echo
+echo "# Starting script!"
+echo
+
+## Produce fasta index
+echo
+echo "# Producing subject indexes!"
+echo
+samtools faidx $SUBJECT_FASTA
+export index="${SUBJECT_FASTA}.fai"
+
+## Run nucmer
+echo
+echo "# Running nucmer!"
+echo
+nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p "${sprefix}_vs_${qprefix}.nucmer"
+
+## Filter alns
+echo
+echo "# Filtering alignments by length!"
+echo
+delta-filter -l $MINLEN -q "${sprefix}_vs_${qprefix}.nucmer".delta > "${sprefix}_vs_${qprefix}.nucmer".filtered.delta
+
+# Produce coords file
+echo
+echo "# Producing parsed coords file!"
+echo
+show-coords -c -l -L $MINLEN -r -T "${sprefix}_vs_${qprefix}.nucmer".delta > "${sprefix}_vs_${qprefix}.nucmer".filtered_coords.txt
+
+# Plot alignment
+echo
+echo "# Ploting alignments!"
+echo
+Rscript plot_nucmer.R --index="$index" --sname="$sprefix" --qname="$qprefix" --coords="${sprefix}_vs_${qprefix}.nucmer".filtered_coords.txt --out="$OUTNAME" --pident "$MINID"

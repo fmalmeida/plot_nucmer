@@ -1,0 +1,7 @@
+[
+  {
+    "files": ["*/*", "*"],
+    "command": "conda run -n base sphinx-build . _site",
+    "showOutput": "false"
+  }
+]

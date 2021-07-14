@@ -1,0 +1,47 @@
+{% set name = "easy_circos" %}
+{% set version = "0.2" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  path: .
+
+build:
+  number: 0
+
+requirements:
+  host:
+    - perl
+    - circos
+    - bioawk
+    - python>=3.7
+    - biopython
+    - numpy
+    - perl-app-cpanminus
+    - perl-module-build
+    - blast
+  run:
+    - perl
+    - circos
+    - bioawk
+    - python>=3.7
+    - biopython
+    - numpy
+    - perl-app-cpanminus
+    - perl-module-build
+    - blast
+
+about:
+  home: "https://github.com/fmalmeida/easy_circos_plot"
+  license: GPL-3
+  license_family: GPL-3
+  license_file:
+  summary: "A simple script to create Circos plots between two fasta files"
+  doc_url:
+  dev_url:
+
+extra:
+  recipe-maintainers:
+    - fmalmeida
