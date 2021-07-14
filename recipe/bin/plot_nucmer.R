@@ -1,9 +1,11 @@
 #!/usr/bin/Rscript
-'usage: plot_nucmer.R [--index=<file> --sname=<chr> --qname=<chr> --coords=<file> --out=<chr> --pident=<int>]
+'usage: plot_nucmer.R [--index=<file> --sname=<chr> --qname=<chr> --coords=<file> --out=<chr> --pident=<int> --scolor=<chr> --qcolor=<chr>]
 options:
   -i, --index=<file>         Subject samtools index file
-  -s, --sname=<chr>          Subject name
-  -q, --qname=<chr>          Query name
+  --sname=<chr>              Subject name
+  --scolor=<chr>             Subject color
+  --qname=<chr>              Query name
+  --qcolor=<chr>             Query color
   -c, --coords=<file>        Nucmer coords file
   -o, --out=<chr>            Plots output prefix
   -p, --pident=<int>         Min. identity' -> doc
@@ -53,19 +55,19 @@ circular_plot_w_ref <- function(reference_GRange, NUCmer_coords){
 
   p <- ggbio() +
     circle(NUCmer_coords, geom = "rect",
-           aes(color = "steelblue", fill = "steelblue")) +  # NUCmer obj
+           aes(color = opt$qcolor, fill = opt$qcolor)) +  # NUCmer obj
     circle(reference_GRange, geom = "ideo",
-           aes(color = "gray70", fill = "gray70")) +        # Ideogram of ref genome
+           aes(color = opt$scolor, fill = opt$scolor)) +        # Ideogram of ref genome
     circle(reference_GRange, geom = "scale",
            scale.type = "M", size = 1.5) +                  # Scale from seqlen of ref genome
     # circle(reference_GRange, geom = "text",
     #       aes(label = seqnames), size = 2) +              # Uncomment for sequence label
-    scale_color_manual(name = "Sequências",
+    scale_color_manual(name = "Sequences",
                        labels = c(opt$sname, opt$qname),
-                       values = c("gray70", "steelblue")) +
-    scale_fill_manual(name = "Sequências",
+                       values = c(opt$scolor, opt$qcolor)) +
+    scale_fill_manual(name = "Sequences",
                       labels = c(opt$sname, opt$qname),
-                      values = c("gray70", "steelblue")) +
+                      values = c(opt$scolor, opt$qcolor)) +
     ggtitle(paste0(opt$sname, " vs. ", opt$qname, sep = ""))
   return(p)
 }
@@ -87,14 +89,9 @@ load_and_plot_nucmer_w_ref <- function(NUCmer_coords_file, ref_faidx_file, perc.
 # Produce the plot
 output <- paste0(opt$out, ".svg", sep = "")
 svg(as.character(output))
-load_and_plot_nucmer_w_ref(NUCmer_coords_file = opt$coords,
-                           ref_faidx_file = opt$index,
-                           perc.id = opt$pident)
-dev.off()
-
-output <- paste0(opt$out, ".png", sep = "")
-png(as.character(output))
-load_and_plot_nucmer_w_ref(NUCmer_coords_file = opt$coords,
-                           ref_faidx_file = opt$index,
-                           perc.id = opt$pident)
+load_and_plot_nucmer_w_ref(
+  NUCmer_coords_file = opt$coords,
+  ref_faidx_file = opt$index,
+  perc.id = opt$pident
+)
 dev.off()

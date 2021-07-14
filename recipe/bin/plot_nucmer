@@ -49,8 +49,10 @@ EOF
 ################
 export SUBJECT_FASTA=""
 export SUBJECT_PREFIX=""
+export SCOLOR="gray70"
 export QUERY_FASTA=""
 export QUERY_PREFIX=""
+export QCOLOR="steelblue"
 export OUTNAME=""
 export MINLEN=1000
 export MINID=90
@@ -92,6 +94,15 @@ case $ARGS in
           exit
       fi
       ;;
+    --scolor)
+      if [ "$2" ]; then
+          export SCOLOR=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--scolor" requires an argument\n'
+          exit
+      fi
+      ;;
     --query)
       if [[ -f "$2" ]]; then
           export QUERY_FASTA=$2
@@ -107,6 +118,15 @@ case $ARGS in
           shift 2
       else
           echo -e '\nERROR: "--qprefix" requires an argument\n'
+          exit
+      fi
+      ;;
+    --qcolor)
+      if [ "$2" ]; then
+          export QCOLOR=$2
+          shift 2
+      else
+          echo -e '\nERROR: "--qcolor" requires an argument\n'
           exit
       fi
       ;;
@@ -168,22 +188,31 @@ export index="${SUBJECT_FASTA}.fai"
 echo
 echo "# Running nucmer!"
 echo
-nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer"
+nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p SUBJECT_vs_QUERY.nucmer
 
 ## Filter alns
 echo
 echo "# Filtering alignments by length!"
 echo
-delta-filter -l $MINLEN -q "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".delta > "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered.delta
+delta-filter -l $MINLEN -q SUBJECT_vs_QUERY.nucmer.delta > SUBJECT_vs_QUERY.nucmer.filtered.delta
 
 # Produce coords file
 echo
 echo "# Producing parsed coords file!"
 echo
-show-coords -c -l -L $MINLEN -r -T "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".delta > "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered_coords.txt
+show-coords -c -l -L $MINLEN -r -T SUBJECT_vs_QUERY.nucmer.delta > SUBJECT_vs_QUERY.nucmer.filtered_coords.txt
 
 # Plot alignment
 echo
 echo "# Ploting alignments!"
 echo
-Rscript plot_nucmer.R --index="$index" --sname="$SUBJECT_PREFIX" --qname="$QUERY_PREFIX" --coords="${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered_coords.txt --out="$OUTNAME" --pident "$MINID"
+SCRIPT=$(which plot_nucmer.R)
+cp $SCRIPT .
+Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY_PREFIX" --coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out "$OUTNAME" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR"
+
+# Bye
+echo
+echo "# Finished!"
+echo "  The command executed was:"
+echo Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY_PREFIX" --coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out "$OUTNAME" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR"
+echo "  The file plot_nucmer.R is available in the working directory for further customisation."
