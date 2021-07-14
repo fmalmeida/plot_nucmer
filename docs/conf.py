@@ -17,9 +17,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Easy (minimal) circos plot.'
-copyright = '2021, Felipe, Almeida. Easy_circos: Simple script to create a circos plot between FASTA files'
-author = 'Felipe Marques de Almeida'
+project   = 'Plot nucmer'
+copyright = '2021, Felipe, Almeida. Plot_nucmer: A simple script to run an alignment with nucmer and visualise its results.'
+author    = 'Felipe Marques de Almeida'
 
 
 # -- General configuration ---------------------------------------------------
@@ -82,9 +82,9 @@ html_theme_options = {
 
     # Set the color and the accent color
     # Primary color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey, and white.
-    'color_primary': 'brown',
+    'color_primary': 'pink',
     #Accent color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, and deep-orange.
-    'color_accent': 'orange',
+    'color_accent': 'blue',
 
     # Visible levels of the global TOC; -1 means unlimited
     'globaltoc_depth': 1,
@@ -97,8 +97,8 @@ html_theme_options = {
     'logo_icon': "book",
 
     # repo info
-    "repo_url": "https://github.com/fmalmeida/easy_circos",
-    "repo_name": "easy_circos",
+    "repo_url": "https://github.com/fmalmeida/plot_nucmer",
+    "repo_name": "plot_nucmer",
     "repo_type": "github",
 }
 html_sidebars = {

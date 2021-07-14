@@ -13,4 +13,4 @@ mkdir -p $PREFIX/bin  || exit 1;
 cp $RECIPE_DIR/bin/* $PREFIX/bin/
 
 # Install r packages
-Rscript install $PREFIX/bin/install_packages.R
+Rscript $PREFIX/bin/install_packages.R

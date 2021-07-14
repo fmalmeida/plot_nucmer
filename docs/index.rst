@@ -1,25 +1,48 @@
 .. _index:
 
-easy_circos
+plot_nucmer
 ===========
 
-`Easy_circos <https://github.com/fmalmeida/easy_circos>`_ is a simple `conda <https://conda.io/>`_ package that aims on rapidly and easily creating minimal circos configurations templates based on input data so that users can further customize and plot by their own desires.
+`Plot_nucmer <https://github.com/fmalmeida/plot_nucmer>`_ is a simple `conda <https://conda.io/>`_ package that aims on rapidly and easily running an alignment with nucmer and visualising its results.
 
 Installation
+------------
+
+Installation is described in the `github main page <https://github.com/fmalmeida/plot_nucmer>`_.
+
+Conda package
+"""""""""""""
+
+> Users are advised to create separate conda environments
+
+.. code-block:: bash
+
+   # Get the conda package
+   mamba create -n plot_nucmer -c conda-forge -c bioconda -c falmeida plot_nucmer
+
+.. TIP:: Users are advised to use `mamba <https://github.com/mamba-org/mamba>`_ since it is faster.
+
+Docker image
 """"""""""""
 
-Installation is described in the `github main page <https://github.com/fmalmeida/easy_circos>`_.
+.. code-block:: bash
+
+   # pull and enter the image
+   docker run --platform linux/amd64 -v $(pwd):/work -w /work -it fmalmeida/plot_nucmer
+
+   # run the script from inside the container
+   root@c896e9370a2f:/work# plot_nucmer --help
 
 Available features
-""""""""""""""""""
+------------------
 
-For now, it can create a circos plot with:
+This script is designed to:
 
-* Chromosome Ideograms. See `circos manual ideograms <http://circos.ca/documentation/tutorials/ideograms/ideograms/lesson>`_.
-* Tick marks of chr lengths. See `circos manual ticks <http://circos.ca/documentation/tutorials/ticks_and_labels/basics/>`_.
-* GC Skew plot.
-* Tiles and text labels from 2D tracks. Eg. genomic regions. See `circos manual 2D tracks <http://circos.ca/documentation/tutorials/2d_tracks/>`_.
-* Similarity links between one or more FASTAs. See `circos manual links <http://circos.ca/documentation/tutorials/links/>`_.
+* Perform whole genome alignment between FASTAs with `nucmer <https://github.com/mummer4/mummer>`_.
+* Filter alignments by length and identity
+* Plot these alignments in circular visualisation with `ggbio <https://bioconductor.org/packages/release/bioc/html/ggbio.html>`_.
+
+It is an automation of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
 
 .. toctree::
    :hidden:

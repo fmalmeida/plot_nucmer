@@ -22,20 +22,24 @@ the inner layer, as it is showing an alignment of the query against the subject.
 
   ## Required
 
-  --subject <fasta>                                     Path to Fasta file to be used as subject in alignment.
+  --subject <fasta>                                     Path to FASTA file to be used as subject in alignment.
 
-  --sprefix <string>                                    Prefix (name) to be used for subject FASTA.
-                                                        Obs: Fasta files and names must not have spaces.
+  --sprefix <string>                                    Prefix (name) to be used for subject FASTA. If prefix has
+                                                        a space it must be double quoted.
 
-  --query <fasta>                                       Path to Fasta file to be used as query in alignment.
+  --query <fasta>                                       Path to FASTA file to be used as query in alignment.
 
-  --qprefix <string>                                    Prefix (name) to be used for query FASTA.
-                                                        Obs: Fasta files and names must not have spaces.
+  --qprefix <string>                                    Prefix (name) to be used for query FASTA. If prefix has
+                                                        a space it must be double quoted.
 
   ## Optional
 
   --out <string>                                        Prefix for nucmer plot outputs.
                                                         Default: plot_nucmer_\${QUERY_PREFIX}_vs_\${SUBJECT_PREFIX}
+
+  --scolor <string>                                     R color for subject contigs. Default: gray70.
+
+  --qcolor <string>                                     R color for query contigs. Default: steelblue.
 
   --minlen <int>                                        Min. alignment length to be considered for plot. Default: 1000.
 

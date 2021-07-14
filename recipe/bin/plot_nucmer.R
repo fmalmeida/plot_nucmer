@@ -87,7 +87,7 @@ load_and_plot_nucmer_w_ref <- function(NUCmer_coords_file, ref_faidx_file, perc.
 }
 
 # Produce the plot
-output <- paste0(opt$out, ".svg", sep = "")
+output <- paste0(gsub(" ", "_", opt$out), ".svg", sep = "")
 svg(as.character(output))
 load_and_plot_nucmer_w_ref(
   NUCmer_coords_file = opt$coords,

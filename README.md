@@ -20,7 +20,7 @@ This script is designed to:
 * Filter alignments by length and identity
 * Plot these alignments in circular visualisation with [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html).
 
-It is an automatization of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
+It is an automation of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
 
 ## Installation
 
