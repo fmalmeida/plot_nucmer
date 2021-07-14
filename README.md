@@ -1,28 +1,26 @@
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/fmalmeida/easy_circos?style=flat-square)](https://github.com/fmalmeida/easy_circos/releases) [![](https://anaconda.org/falmeida/easy_circos/badges/version.svg)](https://anaconda.org/falmeida/easy_circos/badges) [![](https://anaconda.org/falmeida/easy_circos/badges/latest_release_date.svg)](https://anaconda.org/falmeida/easy_circos/badges) [![](https://anaconda.org/falmeida/easy_circos/badges/platforms.svg)](https://anaconda.org/falmeida/easy_circos) [![](https://anaconda.org/falmeida/easy_circos/badges/installer/conda.svg)](https://anaconda.org/falmeida/easy_circos)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/fmalmeida/plot_nucmer?style=flat-square)](https://github.com/fmalmeida/plot_nucmer/releases) [![](https://anaconda.org/falmeida/plot_nucmer/badges/version.svg)](https://anaconda.org/falmeida/plot_nucmer/badges) [![](https://anaconda.org/falmeida/plot_nucmer/badges/latest_release_date.svg)](https://anaconda.org/falmeida/plot_nucmer/badges) [![](https://anaconda.org/falmeida/plot_nucmer/badges/platforms.svg)](https://anaconda.org/falmeida/plot_nucmer) [![](https://anaconda.org/falmeida/plot_nucmer/badges/installer/conda.svg)](https://anaconda.org/falmeida/plot_nucmer)
 
-# Easy (minimal) circos plot
+# Plot nucmer
 
-easy_circos is a simple conda package that aims on rapidly and easily creating minimal circos configurations templates based on input data so that users can further customize and plot by their own desires.
+plot_nucmer is a simple script to run an alignment with nucmer and visualise its results.
 
 ## Table of contents
 
-* [Features](https://github.com/fmalmeida/easy_circos#features)
-* [Installation](https://github.com/fmalmeida/easy_circos#installation)
-* [Documentation](https://github.com/fmalmeida/easy_circos#documentation)
-* [How can you colaborate?](https://github.com/fmalmeida/easy_circos#collaborating)
-* [Citation](https://github.com/fmalmeida/easy_circos#citation)
+* [Features](https://github.com/fmalmeida/plot_nucmer#features)
+* [Installation](https://github.com/fmalmeida/plot_nucmer#installation)
+* [Documentation](https://github.com/fmalmeida/plot_nucmer#documentation)
+* [How can you colaborate?](https://github.com/fmalmeida/plot_nucmer#collaborating)
+* [Citation](https://github.com/fmalmeida/plot_nucmer#citation)
 
 ## Features
 
-For now, it can create a circos plot with:
+This script is designed to:
 
-* Chromosome Ideograms. See [circos manual ideograms](http://circos.ca/documentation/tutorials/ideograms/ideograms/lesson).
-* Tick marks of chr lengths. See [circos manual ticks](http://circos.ca/documentation/tutorials/ticks_and_labels/basics/).
-* GC Skew plot.
-* Tiles and text labels from 2D tracks. Eg. genomic regions. See [circos manual 2D tracks](http://circos.ca/documentation/tutorials/2d_tracks/).
-* Similarity links between one or more FASTAs. See [circos manual links](http://circos.ca/documentation/tutorials/links/).
+* Perform whole genome alignment between FASTAs with [nucmer](https://github.com/mummer4/mummer).
+* Filter alignments by length and identity
+* Plot these alignments in circular visualisation with [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html).
 
-> If you have another idea of implementation flag an issue discussing it (See: [How can you colaborate?](https://github.com/fmalmeida/easy_circos#collaborating))
+It is an automatization of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
 
 ## Installation
 
@@ -32,19 +30,19 @@ For now, it can create a circos plot with:
 
 ```bash
 # Get the conda package
-mamba create -n easy_circos -c conda-forge -c bioconda -c falmeida easy_circos
+mamba create -n plot_nucmer -c conda-forge -c bioconda -c falmeida plot_nucmer
 ```
 
-:fire: Users are advised to use [mamba](https://github.com/mamba-org/mamba) since it is faster and better solves perl dependencies.
+:fire: Users are advised to use [mamba](https://github.com/mamba-org/mamba) since it is faster.
 
 ## Docker image
 
 ```bash
 # pull and enter the image
-docker run --platform linux/amd64 -v $(pwd):/work -w /work -it fmalmeida/easy_circos
+docker run --platform linux/amd64 -v $(pwd):/work -w /work -it fmalmeida/plot_nucmer
 
 # run the script from inside the container
-root@c896e9370a2f:/work# plot_circos --help
+root@c896e9370a2f:/work# plot_nucmer --help
 ```
 
 > Remember to use the parameters `-v` so your files are available to the docker container.
@@ -57,10 +55,10 @@ Command line documentation can be seen with:
 
 ```bash
 # activate env
-conda activate easy_circos
+conda activate plot_nucmer
 
 # see help
-plot_circos --help
+plot_nucmer --help
 ```
 
 Additionally, an online documentation and a simple step-by-step quickstart is provided:
