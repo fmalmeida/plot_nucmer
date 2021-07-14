@@ -24,18 +24,18 @@ the inner layer, as it is showing an alignment of the query against the subject.
 
   --subject <fasta>                                     Path to Fasta file to be used as subject in alignment.
 
-  --sprefix <string>                             Prefix (name) to be used for subject FASTA.
+  --sprefix <string>                                    Prefix (name) to be used for subject FASTA.
                                                         Obs: Fasta files and names must not have spaces.
 
   --query <fasta>                                       Path to Fasta file to be used as query in alignment.
 
-  --qprefix <string>                               Prefix (name) to be used for query FASTA.
+  --qprefix <string>                                    Prefix (name) to be used for query FASTA.
                                                         Obs: Fasta files and names must not have spaces.
 
   ## Optional
 
   --out <string>                                        Prefix for nucmer plot outputs.
-                                                        Default: plot_nucmer_\${qprefix}_vs_\${sprefix}
+                                                        Default: plot_nucmer_\${QUERY_PREFIX}_vs_\${SUBJECT_PREFIX}
 
   --minlen <int>                                        Min. alignment length to be considered for plot. Default: 1000.
 
@@ -51,7 +51,7 @@ export SUBJECT_FASTA=""
 export SUBJECT_PREFIX=""
 export QUERY_FASTA=""
 export QUERY_PREFIX=""
-export OUTNAME="plot_nucmer_${QUERY_PREFIX}_vs_${SUBJECT_PREFIX}"
+export OUTNAME=""
 export MINLEN=1000
 export MINID=90
 
@@ -84,7 +84,7 @@ case $ARGS in
       fi
       ;;
     --sprefix)
-      if [[ "$2" ]]; then
+      if [ "$2" ]; then
           export SUBJECT_PREFIX=$2
           shift 2
       else
@@ -102,7 +102,7 @@ case $ARGS in
       fi
       ;;
     --qprefix)
-      if [[ "$2" ]]; then
+      if [ "$2" ]; then
           export QUERY_PREFIX=$2
           shift 2
       else
@@ -111,7 +111,7 @@ case $ARGS in
       fi
       ;;
     --out)
-      if [[ -f "$2" ]]; then
+      if [ "$2" ]; then
           export OUTNAME=$2
           shift 2
       else
@@ -120,7 +120,7 @@ case $ARGS in
       fi
       ;;
     --minlen)
-      if [[ "$2" ]]; then
+      if [ "$2" ]; then
           export MINLEN=$2
           shift 2
       else
@@ -129,7 +129,7 @@ case $ARGS in
       fi
       ;;
     --minid)
-      if [[ "$2" ]]; then
+      if [ "$2" ]; then
           export MINID=$2
           shift 2
       else
@@ -148,6 +148,9 @@ done
 ###################
 ### Main script ###
 ###################
+if [ "$OUTNAME" == "" ]; then
+    export OUTNAME="plot_nucmer_${QUERY_PREFIX}_vs_${SUBJECT_PREFIX}"
+fi
 
 # start
 echo
@@ -165,22 +168,22 @@ export index="${SUBJECT_FASTA}.fai"
 echo
 echo "# Running nucmer!"
 echo
-nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p "${sprefix}_vs_${qprefix}.nucmer"
+nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer"
 
 ## Filter alns
 echo
 echo "# Filtering alignments by length!"
 echo
-delta-filter -l $MINLEN -q "${sprefix}_vs_${qprefix}.nucmer".delta > "${sprefix}_vs_${qprefix}.nucmer".filtered.delta
+delta-filter -l $MINLEN -q "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".delta > "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered.delta
 
 # Produce coords file
 echo
 echo "# Producing parsed coords file!"
 echo
-show-coords -c -l -L $MINLEN -r -T "${sprefix}_vs_${qprefix}.nucmer".delta > "${sprefix}_vs_${qprefix}.nucmer".filtered_coords.txt
+show-coords -c -l -L $MINLEN -r -T "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".delta > "${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered_coords.txt
 
 # Plot alignment
 echo
 echo "# Ploting alignments!"
 echo
-Rscript plot_nucmer.R --index="$index" --sname="$sprefix" --qname="$qprefix" --coords="${sprefix}_vs_${qprefix}.nucmer".filtered_coords.txt --out="$OUTNAME" --pident "$MINID"
+Rscript plot_nucmer.R --index="$index" --sname="$SUBJECT_PREFIX" --qname="$QUERY_PREFIX" --coords="${SUBJECT_PREFIX}_vs_${QUERY_PREFIX}.nucmer".filtered_coords.txt --out="$OUTNAME" --pident "$MINID"
