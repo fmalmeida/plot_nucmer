@@ -4,8 +4,6 @@
 
 plot_nucmer is a simple script to run an alignment with nucmer and visualise its results.
 
-> If you don't link very much the combination of nucmer and ggbio, check out my other package called [easy_circos](https://github.com/fmalmeida/easy_circos) that uses blastn and circos.
-
 ## Table of contents
 
 * [Features](https://github.com/fmalmeida/plot_nucmer#features)
@@ -23,6 +21,8 @@ This script is designed to:
 * Plot these alignments in circular visualisation with [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html).
 
 It is an automation of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
+
+> If you don't link very much the combination of nucmer and ggbio, check out my other package called [easy_circos](https://github.com/fmalmeida/easy_circos) that uses blastn and circos.
 
 ## Installation
 
