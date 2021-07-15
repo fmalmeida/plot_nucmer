@@ -65,8 +65,8 @@ plot_nucmer --help
 
 Additionally, an online documentation and a simple step-by-step quickstart is provided:
 
-* [Online manual >>](https://easy-circos.readthedocs.io/en/latest/)
-* [Step-by-step quickstart >>](https://easy-circos.readthedocs.io/en/latest/quickstart.html)
+* [Online manual >>](https://plot-nucmer.readthedocs.io/en/latest/)
+* [Step-by-step quickstart >>](https://plot-nucmer.readthedocs.io/en/latest/quickstart.html)
 
 ## Collaborating
 

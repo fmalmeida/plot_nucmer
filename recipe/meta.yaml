@@ -17,12 +17,14 @@ requirements:
     - tar
     - unzip
     - mummer
-    - samtools
+    - samtools=1.9
     - r
     - r-base
     - r-docopt
     - r-devtools
     - r-ggplot2
+    - r-lme4
+    - mscorefonts
     - bioconductor-biocinstaller
     - bioconductor-genomicranges
     - bioconductor-ggbio
@@ -31,12 +33,14 @@ requirements:
     - tar
     - unzip
     - mummer
-    - samtools
+    - samtools=1.9
     - r
     - r-base
     - r-docopt
     - r-devtools
     - r-ggplot2
+    - r-lme4
+    - mscorefonts
     - bioconductor-biocinstaller
     - bioconductor-genomicranges
     - bioconductor-ggbio
