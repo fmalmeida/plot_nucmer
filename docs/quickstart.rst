@@ -20,7 +20,7 @@ To keep things simple and reproducible, let's work with the reference *E. coli* 
    wget \
     https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz \
     -O ecoli_k12.fna.gz && \
-  gzip -d ecoli_k12.fna.gz
+   gzip -d ecoli_k12.fna.gz
 
 Run the script
 --------------
