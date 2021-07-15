@@ -4,6 +4,8 @@
 
 plot_nucmer is a simple script to run an alignment with nucmer and visualise its results.
 
+> If you don't link very much the combination of nucmer and ggbio, check out my other package called [easy_circos](https://github.com/fmalmeida/easy_circos) that uses blastn and circos.
+
 ## Table of contents
 
 * [Features](https://github.com/fmalmeida/plot_nucmer#features)
@@ -67,10 +69,6 @@ Additionally, an online documentation and a simple step-by-step quickstart is pr
 * [Step-by-step quickstart >>](https://easy-circos.readthedocs.io/en/latest/quickstart.html)
 
 ## Collaborating
-
-This is meant to be a collaborative project, which means it is meant to adapt to the community needs. Thus, we encourage users to use it and to collaborate with ideas for different implementations, new commands, additions, etc.
-
-If you have an analysis that you constantly do when working with GFFs and would like to see it implemented in a command-like package to make your life easy, or whenever you feel something can be improved, don't hesitate and **collaborate**.
 
 You can collaborate by:
 

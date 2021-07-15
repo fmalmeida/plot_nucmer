@@ -14,16 +14,32 @@ build:
 requirements:
   host:
     - bash
+    - tar
+    - unzip
     - mummer
     - samtools
     - r
     - r-base
+    - r-docopt
+    - r-devtools
+    - r-ggplot2
+    - bioconductor-biocinstaller
+    - bioconductor-genomicranges
+    - bioconductor-ggbio
   run:
     - bash
+    - tar
+    - unzip
     - mummer
     - samtools
     - r
     - r-base
+    - r-docopt
+    - r-devtools
+    - r-ggplot2
+    - bioconductor-biocinstaller
+    - bioconductor-genomicranges
+    - bioconductor-ggbio
 
 about:
   home: "https://github.com/fmalmeida/plot_nucmer"
