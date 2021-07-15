@@ -22,7 +22,7 @@ This script is designed to:
 
 It is an automation of the methods described by Taylor Reiter at https://taylorreiter.github.io/2019-05-11-Visualizing-NUCmer-Output/.
 
-> If you don't link very much the combination of nucmer and ggbio, check out my other package called [easy_circos](https://github.com/fmalmeida/easy_circos) that uses blastn and circos.
+> If you don't like very much the combination of nucmer and ggbio, check out my other package called [easy_circos](https://github.com/fmalmeida/easy_circos) that uses blastn and circos.
 
 ## Installation
 
