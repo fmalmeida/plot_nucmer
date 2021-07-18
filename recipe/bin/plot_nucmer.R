@@ -79,14 +79,10 @@ load_and_plot_nucmer_w_ref <- function(NUCmer_coords_file, ref_faidx_file, perc.
 
 # Produce the plot
 output <- paste0(gsub(" ", "_", opt$out), ".svg", sep = "")
-p <- load_and_plot_nucmer_w_ref(
+svg(as.character(output))
+load_and_plot_nucmer_w_ref(
   NUCmer_coords_file = opt$coords,
   ref_faidx_file = opt$index,
   perc.id = opt$pident
 )
-ggsave(
-  filename=as.character(output),
-  plot=p,
-  device='svg',
-  dpi=500
-)
+dev.off()
