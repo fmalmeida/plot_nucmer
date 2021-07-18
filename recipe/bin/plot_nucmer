@@ -217,6 +217,7 @@ Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY
 # Bye
 echo
 echo "# Finished!"
-echo "  The command executed was:"
-echo Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY_PREFIX" --coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out "$OUTNAME" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR"
+echo "  The command executed is in the file render.sh!"
+echo Rscript plot_nucmer.R --index "$index" --sname \"${SUBJECT_PREFIX}\" --qname \"${QUERY_PREFIX}\" \
+--coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out \"${OUTNAME}\" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR" >> render.sh
 echo "  The file plot_nucmer.R is available in the working directory for further customisation."
