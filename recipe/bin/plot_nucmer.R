@@ -51,14 +51,30 @@ faidx_to_GRanges <- function(faidx_file){
 # creates circular plot
 circular_plot_w_ref <- function(reference_GRange, NUCmer_coords){
   p <- ggbio() +
-    circle(NUCmer_coords, geom = "rect",
-           aes(color = opt$qcolor, fill = opt$qcolor)) +  # NUCmer obj
-    circle(reference_GRange, geom = "ideo",
-           aes(color = opt$scolor, fill = opt$scolor)) +        # Ideogram of ref genome
-    circle(reference_GRange, geom = "scale",
-           scale.type = "M", size = 1.5) +                  # Scale from seqlen of ref genome
+    circle(
+      NUCmer_coords, 
+      geom = "rect",
+            aes(
+             color = opt$qcolor,
+             fill = opt$qcolor
+            )
+    ) +                                                                # NUCmer obj
+    circle(
+      reference_GRange, 
+      geom = "ideo",
+      aes(
+        color = opt$scolor, 
+        fill = opt$scolor
+      )
+    ) +                                                                # Ideogram of ref genome
+    circle(
+      reference_GRange, 
+      geom = "scale",
+      scale.type = "M", 
+      size = 2.5,
+      scale.unit = 10^4) +                                             # Scale from seqlen of ref genome
     # circle(reference_GRange, geom = "text",
-    #       aes(label = seqnames), size = 2) +              # Uncomment for sequence label
+    #       aes(label = seqnames), size = 2) +                         # Uncomment for sequence label
     scale_color_manual(name = "Sequences",
                        labels = c(opt$sname, opt$qname),
                        values = c(opt$scolor, opt$qcolor)) +
