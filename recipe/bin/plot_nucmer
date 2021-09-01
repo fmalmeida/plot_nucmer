@@ -192,19 +192,19 @@ export index="${SUBJECT_FASTA}.fai"
 echo
 echo "# Running nucmer!"
 echo
-nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p SUBJECT_vs_QUERY.nucmer
+nucmer --mum $SUBJECT_FASTA $QUERY_FASTA -p QUERY_vs_SUBJECT.nucmer
 
 ## Filter alns
 echo
 echo "# Filtering alignments by length!"
 echo
-delta-filter -l $MINLEN -q SUBJECT_vs_QUERY.nucmer.delta > SUBJECT_vs_QUERY.nucmer.filtered.delta
+delta-filter -l $MINLEN -q QUERY_vs_SUBJECT.nucmer.delta > QUERY_vs_SUBJECT.nucmer.filtered.delta
 
 # Produce coords file
 echo
 echo "# Producing parsed coords file!"
 echo
-show-coords -c -l -L $MINLEN -r -T SUBJECT_vs_QUERY.nucmer.delta > SUBJECT_vs_QUERY.nucmer.filtered_coords.txt
+show-coords -c -l -L $MINLEN -r -T QUERY_vs_SUBJECT.nucmer.filtered.delta > QUERY_vs_SUBJECT.nucmer.filtered_coords.txt
 
 # Plot alignment
 echo
@@ -212,11 +212,11 @@ echo "# Ploting alignments!"
 echo
 SCRIPT=$(which plot_nucmer.R)
 cp $SCRIPT .
-Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY_PREFIX" --coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out "$OUTNAME" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR"
+Rscript plot_nucmer.R --index "$index" --sname "$SUBJECT_PREFIX" --qname "$QUERY_PREFIX" --coords "QUERY_vs_SUBJECT.nucmer.filtered_coords.txt" --out "$OUTNAME" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR"
 
 # Bye
 echo
 echo "# Finished!"
 echo "  The command executed is in the file render.sh!"
-echo Rscript plot_nucmer.R --index "$index" --sname \"${SUBJECT_PREFIX}\" --qname \"${QUERY_PREFIX}\" --coords "SUBJECT_vs_QUERY.nucmer.filtered_coords.txt" --out \"${OUTNAME}\" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR" > render.sh
+echo Rscript plot_nucmer.R --index "$index" --sname \"${SUBJECT_PREFIX}\" --qname \"${QUERY_PREFIX}\" --coords "QUERY_vs_SUBJECT.nucmer.filtered_coords.txt" --out \"${OUTNAME}\" --pident "$MINID" --scolor "$SCOLOR" --qcolor "$QCOLOR" > render.sh
 echo "  The file plot_nucmer.R is available in the working directory for further customisation."
