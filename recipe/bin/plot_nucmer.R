@@ -89,6 +89,7 @@ circular_plot_w_ref <- function(reference_GRange, NUCmer_coords){
 load_and_plot_nucmer_w_ref <- function(NUCmer_coords_file, ref_faidx_file, perc.id) {
   NUCmer_coords <- load_coords(NUCmer_coords_file, perc.id = perc.id)   # Make GRanges obj of nucmer output file
   referenceGR <- faidx_to_GRanges(faidx_file = ref_faidx_file)
+  seqlengths(NUCmer_coords) <- seqlengths(referenceGR)
   plot <- circular_plot_w_ref(reference_GRange = referenceGR, NUCmer_coords = NUCmer_coords)
   return(plot)
 }
